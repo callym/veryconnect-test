@@ -1,0 +1,4 @@
+<div *ngIf="post != null" class="post">
+  <div class="text">{{ post.text }}</div>
+  <div class="date">{{ post.created_at | date: 'h:mm a, MMM d, y' }}</div>
+</div>
