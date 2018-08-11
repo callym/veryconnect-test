@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.posts_service.all()
+    this.posts_service.posts
       .subscribe(posts => this.posts = posts);
   }
 }

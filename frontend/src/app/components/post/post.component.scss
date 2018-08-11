@@ -1,11 +1,42 @@
 @import 'variables';
 
 .post {
-  margin: 0 auto;
+  margin: 1em auto;
+  padding: 0.25em 0.5em;
+
   max-width: 500px;
+
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
 }
 
-.date {
+.comment-footer,
+.post-footer {
   color: $secondary;
   font-size: 0.75em;
+
+  & > .username {
+    &::before {
+      content: '@';
+    }
+
+    &::after {
+      margin: 0 0.25em;
+      content: '•';
+    }
+  }
+}
+
+.comments {
+  margin: 0.5em 0;
+  margin-left: 1.5em;
+  padding: 0.25em 0.5em;
+
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+}
+
+.comments-form {
+  margin: 0.5em 0;
+  margin-left: 1.5em;
 }
