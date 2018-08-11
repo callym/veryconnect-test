@@ -11,6 +11,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { PostComponent } from './components/post/post.component';
 import { UserSelectComponent } from './components/user-select/user-select.component';
+import { NewPostComponent } from './components/new-post/new-post.component';
+
 library.add(fas);
 
 @NgModule({
@@ -18,6 +20,7 @@ library.add(fas);
     AppComponent,
     PostComponent,
     UserSelectComponent,
+    NewPostComponent,
   ],
   imports: [
     BrowserModule,
