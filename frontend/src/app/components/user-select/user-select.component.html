@@ -1,0 +1,38 @@
+<div class="user-select">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text current-user">
+        {{ current_user ? current_user.name : 'No User Selected' }}
+      </span>
+    </div>
+    <div class="input-group-append" ngbDropdown placement="bottom-right">
+      <button class="btn btn-outline-secondary" ngbDropdownToggle>
+        <fa-icon icon="users"></fa-icon>
+      </button>
+      <div class="dropdown-menu" ngbDropdownMenu>
+        <button class="dropdown-item" *ngFor="let user of users" (click)="switch_user(user)">{{ user.name }}</button>
+        <button class="dropdown-item" (click)="new_user(content)">New User</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-close="close">
+  <div class="modal-header">
+    <h4 class="modal-title">New User</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="name">Username</label>
+        <div class="input-group">
+          <input id="name" class="form-control" #name>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="close('')">Cancel</button>
+    <button type="button" class="btn btn-outline-dark" (click)="close(name.value)">Add</button>
+  </div>
+</ng-template>

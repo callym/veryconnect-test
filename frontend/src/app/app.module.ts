@@ -3,20 +3,27 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { PostComponent } from './components/post/post.component';
+import { UserSelectComponent } from './components/user-select/user-select.component';
+library.add(fas);
 
 @NgModule({
   declarations: [
     AppComponent,
     PostComponent,
+    UserSelectComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    FontAwesomeModule,
     NgbModule.forRoot(),
   ],
   providers: [],
