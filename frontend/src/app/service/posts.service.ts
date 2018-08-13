@@ -1,3 +1,17 @@
+/*
+This class provides the PostsService,
+and is responsible for:
+* getting all posts from the server
+* creating new posts and comments
+
+`_posts` is a BehaviorSubject because it acts like an Observable,
+but is guaranteed to always have a value,
+meaning that when other classes subscribe to it, they immediately
+get the current list of posts, and also are informed when that
+list is updated (e.g. through creating a post, or potentially
+through a WebSockets notification of a new post).
+*/
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';

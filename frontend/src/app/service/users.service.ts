@@ -1,3 +1,20 @@
+/*
+This class provides the UsersService,
+and is responsible for:
+* getting all users from the server
+* storing the currently active user
+* switching users
+* registering new users
+* assigning posts and comments to users
+
+`users` is a Map to stop duplicate lookups when calling `get_user`
+`_current_user` is a BehaviorSubject because it acts like an Observable,
+but is guaranteed to always have a value,
+meaning that when other classes subscribe to `current_user_observable`, they immediately
+get the current user (or `null`), and when that user is changed,
+they are immediately informed of this change.
+*/
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
