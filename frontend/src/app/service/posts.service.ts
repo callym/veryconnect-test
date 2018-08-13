@@ -13,7 +13,7 @@ through a WebSockets notification of a new post).
 */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
 import { Config } from '../config';

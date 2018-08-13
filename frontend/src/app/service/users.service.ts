@@ -16,12 +16,12 @@ they are immediately informed of this change.
 */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Config } from '../config';
-import { Post, IPost } from '../models/post';
-import { IComment, Comment } from '../models/comment';
+import { Post } from '../models/post';
+import { Comment } from '../models/comment';
 import { User, IUser } from '../models/user';
 
 @Injectable({
