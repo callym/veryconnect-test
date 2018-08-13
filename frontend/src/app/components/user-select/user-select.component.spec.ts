@@ -1,4 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserSelectComponent } from './user-select.component';
 
@@ -8,7 +14,16 @@ describe('UserSelectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserSelectComponent ]
+      declarations: [
+        UserSelectComponent,
+      ],
+      imports: [
+        HttpClientModule,
+        HttpClientTestingModule,
+        FormsModule,
+        FontAwesomeModule,
+        NgbModule.forRoot(),
+      ],
     })
     .compileComponents();
   }));
