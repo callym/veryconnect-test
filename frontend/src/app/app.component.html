@@ -2,6 +2,4 @@
 
 <app-new-post></app-new-post>
 
-<ng-container *ngFor="let post of posts">
-  <app-post [post]="post"></app-post>
-</ng-container>
+<app-post *ngFor="let post of posts" [post]="post"></app-post>
