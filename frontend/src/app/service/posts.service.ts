@@ -58,6 +58,8 @@ export class PostsService {
                   .subscribe(u => comment.user = u);
               }
             }
+
+            post.comments = post.comments.sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
           }
 
           this._posts.next(posts);
