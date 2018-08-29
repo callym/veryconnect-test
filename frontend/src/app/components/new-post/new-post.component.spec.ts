@@ -61,11 +61,8 @@ describe('NewPostComponent', () => {
   });
 
   it('should not add post', () => {
-    const input = {
-      value: '',
-    };
-
-    component.add_post(input as HTMLInputElement);
+    component.post = '';
+    component.add_post();
 
     expect(postsService.create.calls.count())
       .toBe(0, 'empty value passed to postsService');
@@ -74,16 +71,13 @@ describe('NewPostComponent', () => {
   it('should add post', () => {
     postsService.create.and.returnValue(of([]));
 
-    const input = {
-      value: 'Test Post',
-    };
-
-    component.add_post(input as HTMLInputElement);
+    component.post = 'Test Post';
+    component.add_post();
 
     expect(postsService.create.calls.count())
       .toBe(1, 'empty value passed to postsService');
 
-    expect(input.value)
+    expect(component.post)
       .toBe('', 'input value not reset');
   });
 

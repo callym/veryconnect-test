@@ -15,6 +15,8 @@ import { Subscription } from 'rxjs';
 export class NewPostComponent implements OnInit {
   public has_user = false;
 
+  public post = '';
+
   @Unsubscribe()
   current_user_subscription: Subscription;
 
@@ -28,17 +30,17 @@ export class NewPostComponent implements OnInit {
       });
   }
 
-  public add_post(input: HTMLInputElement) {
-    if (input.value === '') {
+  public add_post() {
+    if (this.post === '') {
       return;
     }
 
     this.post_service.create({
-      text: input.value,
+      text: this.post,
     })
     .pipe(first())
     .subscribe(() => {
-      input.value = '';
+      this.post = '';
     });
   }
 }

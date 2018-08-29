@@ -13,11 +13,11 @@
     </div>
   </div>
 
-  <form *ngIf="has_user" #commentForm="ngForm" (ngSubmit)="add_comment(comment)" class="comments-form">
+  <form *ngIf="has_user" #commentForm="ngForm" (ngSubmit)="add_comment()" class="comments-form">
     <div class="input-group">
-      <input type="text" class="form-control form-control-sm" placeholder="Reply to this post..." required #comment>
+      <input [(ngModel)]="comment" name="comment" type="text" class="form-control form-control-sm" placeholder="Reply to this post..." required>
       <div class="input-group-append">
-        <button class="btn btn-sm btn-outline-secondary" type="submit">
+        <button class="btn btn-sm btn-outline-secondary" type="submit" [disabled]="!commentForm.form.valid || comment === ''">
           <fa-icon icon="paper-plane"></fa-icon>
         </button>
       </div>

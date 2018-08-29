@@ -59,32 +59,26 @@ describe('PostComponent', () => {
   });
 
   it('should not add comment', () => {
-    const input = {
-      value: '',
-    };
-
-    component.add_comment(input as HTMLInputElement);
+    component.comment = '';
+    component.add_comment();
 
     expect(postsService.add_comment.calls.count())
       .toBe(0, 'empty value passed to postsService');
   });
 
   it('should add comment', () => {
-    component.post = new Post();
-    component.post.id = 'abcdefg';
+    const new_post = new Post({ id: 'abcdefg' });
+    component.post = new_post;
 
-    postsService.add_comment.and.returnValue(of(new Post()));
+    postsService.add_comment.and.returnValue(of(new_post));
 
-    const input = {
-      value: 'Test Post',
-    };
-
-    component.add_comment(input as HTMLInputElement);
+    component.comment = 'Test Comment';
+    component.add_comment();
 
     expect(postsService.add_comment.calls.count())
       .toBe(1, 'empty value passed to postsService');
 
-    expect(input.value)
+    expect(component.comment)
       .toBe('', 'input value not reset');
   });
 

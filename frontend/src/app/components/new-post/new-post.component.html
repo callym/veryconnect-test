@@ -1,13 +1,15 @@
-<form #commentForm="ngForm" (ngSubmit)="add_post(post)" class="posts-form">
+<form #commentForm="ngForm" (ngSubmit)="add_post()" class="posts-form">
   <div class="input-group">
     <input type="text"
+      [(ngModel)]="post"
+      name="post"
       class="form-control"
       placeholder="What is on your mind?"
       [disabled]="!has_user"
-      required #post>
+      required>
     <div class="input-group-append">
       <button class="btn btn-outline-secondary" type="submit"
-        [disabled]="!has_user">
+        [disabled]="!has_user || !commentForm.form.valid || post === ''">
         <fa-icon icon="paper-plane"></fa-icon>
       </button>
     </div>
