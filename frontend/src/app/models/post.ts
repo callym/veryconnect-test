@@ -1,3 +1,7 @@
+import { Proto } from 'typescript-proto-decorator';
+
+import { Model } from './models';
+
 import { Comment } from './comment';
 import { User } from './user';
 
@@ -5,36 +9,28 @@ export interface IPost {
   text: string;
 }
 
-export class Post implements IPost {
+export class Post extends Model<IPost> implements IPost {
   text: string;
-  created_at: Date;
-  updated_at: Date;
-  id: string;
 
+  @Proto([])
   comments: Comment[];
+
   user: User;
 
-  public static fromJSON(data: any): Post {
-    const post = new Post();
+  public constructor(data: any) {
+    super(data);
 
-    post.text = data.text;
-    post.created_at = new Date(data.createdAt);
-    post.updated_at = new Date(data.updatedAt);
-    post.id = data.id;
-
-    post.comments = [];
+    this.text = data.text;
 
     if (data.comments != null) {
       let comments: any[] = data.comments;
-      comments = comments.map(c => Comment.fromJSON(c));
+      comments = comments.map(c => new Comment(c));
       comments = comments.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
 
-      post.comments = comments;
+      this.comments = comments;
     }
 
-    post.user = data.user;
-
-    return post;
+    this.user = data.user;
   }
 
   public static toJSON(data: IPost): IPost {

@@ -36,9 +36,9 @@ export class PostsService {
   }
 
   private get_all(): Observable<Post[]> {
-    return this.http.get(`${Config.endpoint}/post`)
+    return this.http.get<any[]>(`${Config.endpoint}/post`)
       .pipe(
-        map((json: any[]) => json.map(j => Post.fromJSON(j))),
+        map(json => json.map(p => new Post(p))),
         tap(posts => {
           posts = posts.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
 
@@ -62,11 +62,10 @@ export class PostsService {
   }
 
   public create(data: IPost): Observable<Post> {
-    return this.http.post(
+    return this.http.post<Post>(
       `${Config.endpoint}/post`,
       Post.toJSON(data),
     ).pipe(
-      map(json => Post.fromJSON(json)),
       flatMap(post => this.users_service.add_post(post)),
       tap(() => this.get_all().subscribe()),
     );
@@ -74,16 +73,15 @@ export class PostsService {
 
   public add_comment(post_id: string, comment: IComment | string): Observable<Post> {
     if (typeof comment !== 'string') {
-      return this.http.post(`${Config.endpoint}/comment`, Comment.toJSON(comment))
+      return this.http.post<Comment>(`${Config.endpoint}/comment`, Comment.toJSON(comment))
         .pipe(
-          flatMap(c => this.users_service.add_comment(Comment.fromJSON(c))),
+          flatMap(c => this.users_service.add_comment(c)),
           flatMap(c => this.add_comment(post_id, c.id)),
         );
     }
 
-    return this.http.put(`${Config.endpoint}/post/${post_id}/comments/${comment}`, {})
+    return this.http.put<Post>(`${Config.endpoint}/post/${post_id}/comments/${comment}`, {})
       .pipe(
-        map(json => Post.fromJSON(json)),
         tap(() => this.get_all().subscribe()),
       );
   }

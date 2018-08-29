@@ -1,28 +1,20 @@
+import { Model } from './models';
+
 import { User } from './user';
 
 export interface IComment {
   text: string;
 }
 
-export class Comment implements IComment {
+export class Comment extends Model<IComment> implements IComment {
   text: string;
-  created_at: Date;
-  updated_at: Date;
-  id: string;
-
   user: User;
 
-  public static fromJSON(data: any): Comment {
-    const comment = new Comment();
+  public constructor(data: any) {
+    super(data);
 
-    comment.text = data.text;
-    comment.created_at = new Date(data.createdAt);
-    comment.updated_at = new Date(data.updatedAt);
-    comment.id = data.id;
-
-    comment.user = data.user;
-
-    return comment;
+    this.text = data.text;
+    this.user = data.user;
   }
 
   public static toJSON(data: IComment): IComment {

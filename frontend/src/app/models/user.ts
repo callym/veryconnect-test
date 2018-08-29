@@ -1,48 +1,44 @@
+import { Model } from './models';
+
 import { Comment } from './comment';
 import { Post } from './post';
+import { Proto } from 'typescript-proto-decorator';
 
 export interface IUser {
   name: string;
 }
 
-export class User implements IUser {
+export class User extends Model<IUser> implements IUser {
   name: string;
-  created_at: Date;
-  updated_at: Date;
-  id: string;
 
+  @Proto([])
   comments: Comment[];
+
+  @Proto([])
   posts: Post[];
 
-  public static fromJSON(data: any): User {
-    const user = new User();
+  public constructor(data: any) {
+    super(data);
 
-    user.name = data.name;
-    user.created_at = new Date(data.createdAt);
-    user.updated_at = new Date(data.updatedAt);
-    user.id = data.id;
-
-    user.comments = [];
+    this.name = data.name;
 
     if (data.comments != null) {
+      this.comments = [];
       const comments: any[] = data.comments;
       comments.forEach(c => {
-        const comment = Comment.fromJSON(c);
-        user.comments.push(comment);
+        const comment = new Comment(c);
+        this.comments.push(comment);
       });
     }
-
-    user.posts = [];
 
     if (data.posts != null) {
+      this.posts = [];
       const posts: any[] = data.posts;
       posts.forEach(p => {
-        const post = Post.fromJSON(p);
-        user.posts.push(post);
+        const post = new Post(p);
+        this.posts.push(post);
       });
     }
-
-    return user;
   }
 
   public static toJSON(data: IUser): IUser {

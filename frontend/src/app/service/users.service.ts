@@ -50,9 +50,9 @@ export class UsersService {
   }
 
   public all(): Observable<User[]> {
-    return this.http.get(`${Config.endpoint}/user`)
+    return this.http.get<any[]>(`${Config.endpoint}/user`)
       .pipe(
-        map((json: any[]) => json.map(j => User.fromJSON(j))),
+        map(json => json.map(u => new User(u))),
         tap(users => users.forEach(u => this.users.set(u.id, u))),
       );
   }
@@ -62,19 +62,16 @@ export class UsersService {
       return of(this.users.get(id));
     }
 
-    return this.http.get(`${Config.endpoint}/user/${id}`)
+    return this.http.get<User>(`${Config.endpoint}/user/${id}`)
       .pipe(
-        map(json => User.fromJSON(json)),
         tap(user => this.users.set(user.id, user)),
       );
   }
 
   public create(data: IUser): Observable<User> {
-    return this.http.post(
+    return this.http.post<User>(
       `${Config.endpoint}/user`,
       User.toJSON(data),
-    ).pipe(
-      map(json => User.fromJSON(json))
     );
   }
 
