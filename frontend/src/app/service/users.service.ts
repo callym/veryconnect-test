@@ -19,17 +19,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { NgxDecorate, Complete } from 'ngx-decorate';
 import { Config } from '../config';
 import { Post } from '../models/post';
 import { Comment } from '../models/comment';
 import { User, IUser } from '../models/user';
 
+@NgxDecorate()
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   private users: Map<string, User>;
 
+  @Complete()
   private _current_user: BehaviorSubject<User | null>;
 
   public get has_user(): boolean {

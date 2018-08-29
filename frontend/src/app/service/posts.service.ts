@@ -16,16 +16,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
+import { NgxDecorate, Complete } from 'ngx-decorate';
 import { Config } from '../config';
 import { Post, IPost } from '../models/post';
 import { IComment, Comment } from '../models/comment';
 import { UsersService } from './users.service';
 
+@NgxDecorate()
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
+  @Complete()
   private _posts: BehaviorSubject<Post[]>;
+
   public get posts(): Observable<Post[]> {
     return this._posts.asObservable();
   }

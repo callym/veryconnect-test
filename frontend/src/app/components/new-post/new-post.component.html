@@ -3,11 +3,11 @@
     <input type="text"
       class="form-control"
       placeholder="What is on your mind?"
-      [disabled]="!user_service.has_user"
+      [disabled]="!has_user"
       required #post>
     <div class="input-group-append">
       <button class="btn btn-outline-secondary" type="submit"
-        [disabled]="!user_service.has_user">
+        [disabled]="!has_user">
         <fa-icon icon="paper-plane"></fa-icon>
       </button>
     </div>
