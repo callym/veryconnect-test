@@ -6,7 +6,28 @@
  */
 
 module.exports = {
-  
+  /**
+   * @param { Request } req
+   * @param { Response } res
+   */
+  get_all: async function(req, res) {
+    const users = await User.find({
+      sort: 'name',
+    });
 
+    return res.json(users);
+  },
+
+  /**
+   * @param { Request } req
+   * @param { Response } res
+   */
+  get: async function(req, res) {
+    const user = await User.findOne({
+      id: req.params.id,
+    });
+
+    return res.json(user);
+  },
 };
 

@@ -25,8 +25,6 @@ export class Post extends Model<IPost> implements IPost {
     if (data.comments != null) {
       let comments: any[] = data.comments;
       comments = comments.map(c => new Comment(c));
-      comments = comments.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-
       this.comments = comments;
     }
 

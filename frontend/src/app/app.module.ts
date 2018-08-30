@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { PostComponent } from './components/post/post.component';
 import { UserSelectComponent } from './components/user-select/user-select.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
+import { UnauthorizedModalComponent } from './components/unauthorized-modal/unauthorized-modal.component';
 
 library.add(fas);
 
@@ -21,6 +22,7 @@ library.add(fas);
     PostComponent,
     UserSelectComponent,
     NewPostComponent,
+    UnauthorizedModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +32,9 @@ library.add(fas);
     NgbModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    UnauthorizedModalComponent,
+  ],
 })
 export class AppModule { }

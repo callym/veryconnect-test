@@ -6,7 +6,14 @@
  */
 
 module.exports = {
+  /**
+   * @param { Request } req
+   * @param { Response } res
+   */
+  create: async function(req, res) {
+    const comment = await Comment.create(req.body).fetch();
 
-
+    return res.json(comment);
+  },
 };
 

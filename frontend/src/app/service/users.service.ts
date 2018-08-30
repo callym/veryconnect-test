@@ -32,6 +32,8 @@ import { User, IUser } from '../models/user';
 export class UsersService {
   private users: Map<string, User>;
 
+  public logged_in = false;
+
   @Complete()
   private _current_user: BehaviorSubject<User | null>;
 
@@ -83,21 +85,16 @@ export class UsersService {
   }
 
   public add_post(post: Post): Observable<Post> {
-    return this.http.put(`${Config.endpoint}/user/${this.current_user.id}/posts/${post.id}`, {})
+    const headers = {};
+    if (this.logged_in === true) {
+      headers['Authorization'] = this.current_user.id;
+    }
+
+    return this.http.put(`${Config.endpoint}/user/${this.current_user.id}/posts/${post.id}`, {}, { headers })
       .pipe(
         map(() => {
           post.user = this.current_user;
           return post;
-        }),
-      );
-  }
-
-  public add_comment(comment: Comment): Observable<Comment> {
-    return this.http.put(`${Config.endpoint}/user/${this.current_user.id}/comments/${comment.id}`, {})
-      .pipe(
-        map(() => {
-          comment.user = this.current_user;
-          return comment;
         }),
       );
   }

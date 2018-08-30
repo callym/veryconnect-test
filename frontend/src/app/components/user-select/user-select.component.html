@@ -1,4 +1,10 @@
 <div class="user-select">
+  <div class="log-in" [class.logged-in]="users_service.logged_in">
+    <button class="btn btn-outline-secondary" (click)="log_in()">
+      <fa-icon icon="user-lock"></fa-icon>
+    </button>
+  </div>
+
   <div class="input-group">
     <div class="input-group-prepend">
       <span class="input-group-text current-user">

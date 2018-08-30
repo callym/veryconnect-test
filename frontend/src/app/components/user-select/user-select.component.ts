@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { NgxDecorate, Unsubscribe } from 'ngx-decorate';
@@ -23,7 +23,7 @@ export class UserSelectComponent implements OnInit {
   @Unsubscribe()
   users_current_subscription: Subscription;
 
-  constructor(private users_service: UsersService, private modal_service: NgbModal) {
+  constructor(public users_service: UsersService, private modal_service: NgbModal, private cdx: ChangeDetectorRef) {
     this.users = [];
   }
 
@@ -36,6 +36,8 @@ export class UserSelectComponent implements OnInit {
 
   switch_user(user: User) {
     this.users_service.change_user(user);
+    this.users_service.logged_in = false;
+    this.cdx.detectChanges();
   }
 
   new_user(content: any) {
@@ -49,5 +51,10 @@ export class UserSelectComponent implements OnInit {
         .pipe(first())
         .subscribe(() => this.ngOnInit());
     });
+  }
+
+  log_in() {
+    this.users_service.logged_in = !this.users_service.logged_in;
+    this.cdx.detectChanges();
   }
 }

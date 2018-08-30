@@ -18,5 +18,8 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-
+  '*': 'isLoggedIn',
+  'user/get': true,
+  'user/get_all': true,
+  'post/get_all': true,
 };

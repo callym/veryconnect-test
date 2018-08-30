@@ -44,8 +44,6 @@ export class PostsService {
       .pipe(
         map(json => json.map(p => new Post(p))),
         tap(posts => {
-          posts = posts.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-
           for (const post of posts) {
             if (typeof post.user === 'string') {
               this.users_service.get_user(post.user)
@@ -58,8 +56,6 @@ export class PostsService {
                   .subscribe(u => comment.user = u);
               }
             }
-
-            post.comments = post.comments.sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
           }
 
           this._posts.next(posts);
@@ -68,9 +64,15 @@ export class PostsService {
   }
 
   public create(data: IPost): Observable<Post> {
+    const headers = {};
+    if (this.users_service.logged_in === true) {
+      headers['Authorization'] = this.users_service.current_user.id;
+    }
+
     return this.http.post<Post>(
       `${Config.endpoint}/post`,
       Post.toJSON(data),
+      { headers }
     ).pipe(
       flatMap(post => this.users_service.add_post(post)),
       tap(() => this.get_all().subscribe()),
@@ -78,15 +80,21 @@ export class PostsService {
   }
 
   public add_comment(post_id: string, comment: IComment | string): Observable<Post> {
+    const headers = {};
+    if (this.users_service.logged_in === true) {
+      headers['Authorization'] = this.users_service.current_user.id;
+    }
+
     if (typeof comment !== 'string') {
-      return this.http.post<Comment>(`${Config.endpoint}/comment`, Comment.toJSON(comment))
+      comment = Comment.toJSON(comment);
+      comment.user = this.users_service.current_user.id;
+      return this.http.post<Comment>(`${Config.endpoint}/comment`, comment, { headers })
         .pipe(
-          flatMap(c => this.users_service.add_comment(c)),
           flatMap(c => this.add_comment(post_id, c.id)),
         );
     }
 
-    return this.http.put<Post>(`${Config.endpoint}/post/${post_id}/comments/${comment}`, {})
+    return this.http.put<Post>(`${Config.endpoint}/post/${post_id}/comments/${comment}`, {}, { headers })
       .pipe(
         tap(() => this.get_all().subscribe()),
       );

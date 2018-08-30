@@ -4,6 +4,7 @@ import { User } from './user';
 
 export interface IComment {
   text: string;
+  [x: string]: any;
 }
 
 export class Comment extends Model<IComment> implements IComment {

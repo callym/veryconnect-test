@@ -13,3 +13,17 @@
     width: initial;
   }
 }
+
+.log-in {
+  margin-right: 1em;
+
+  & fa-icon {
+    color: darken(red, 10);
+  }
+
+  &.logged-in {
+    & fa-icon {
+      color: green;
+    }
+  }
+}

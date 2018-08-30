@@ -4,6 +4,8 @@ import { PostsService } from '../../service/posts.service';
 import { UsersService } from '../../service/users.service';
 import { Unsubscribe, NgxDecorate } from 'ngx-decorate';
 import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UnauthorizedModalComponent } from '../unauthorized-modal/unauthorized-modal.component';
 
 @NgxDecorate()
 @Component({
@@ -20,7 +22,12 @@ export class NewPostComponent implements OnInit {
   @Unsubscribe()
   current_user_subscription: Subscription;
 
-  constructor(private post_service: PostsService, private user_service: UsersService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private post_service: PostsService,
+    private user_service: UsersService,
+    private modal: NgbModal,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.current_user_subscription = this.user_service.current_user_observable
@@ -41,6 +48,10 @@ export class NewPostComponent implements OnInit {
     .pipe(first())
     .subscribe(() => {
       this.post = '';
+    }, err => {
+      if (err.error === 'Unauthorized') {
+        this.modal.open(UnauthorizedModalComponent);
+      }
     });
   }
 }
