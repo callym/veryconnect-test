@@ -7,6 +7,7 @@ import { User } from './user';
 
 export interface IPost {
   text: string;
+  [x: string]: any;
 }
 
 export class Post extends Model<IPost> implements IPost {

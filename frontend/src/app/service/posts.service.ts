@@ -69,9 +69,12 @@ export class PostsService {
       headers['Authorization'] = this.users_service.current_user.id;
     }
 
+    const post = Post.toJSON(data);
+    post.user = this.users_service.current_user.id;
+
     return this.http.post<Post>(
       `${Config.endpoint}/post`,
-      Post.toJSON(data),
+      post,
       { headers }
     ).pipe(
       flatMap(post => this.users_service.add_post(post)),
@@ -88,6 +91,7 @@ export class PostsService {
     if (typeof comment !== 'string') {
       comment = Comment.toJSON(comment);
       comment.user = this.users_service.current_user.id;
+      comment.post = post_id;
       return this.http.post<Comment>(`${Config.endpoint}/comment`, comment, { headers })
         .pipe(
           flatMap(c => this.add_comment(post_id, c.id)),

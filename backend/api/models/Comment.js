@@ -24,9 +24,11 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
     post: {
       model: 'post',
+      required: true,
     },
     user: {
       model: 'user',
+      required: true,
     },
   },
 
