@@ -27,6 +27,11 @@ module.exports = {
       id: req.params.id,
     });
 
+    if (user == null) {
+      res.status(404);
+      return res.send('Not Found');
+    }
+
     return res.json(user);
   },
 };

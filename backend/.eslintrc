@@ -5,7 +5,7 @@
   // A set of basic code conventions (similar to a .jshintrc file) designed to
   // encourage quality and consistency across your Sails app's code base.
   // These rules are checked against automatically any time you run `npm test`.
-  // 
+  //
   // > Note: If you're using mocha, you'll want to add an extra override file to your
   // > `test/` folder so that eslint will tolerate mocha-specific globals like `before`
   // > and `describe`.
@@ -42,10 +42,9 @@
 
   "rules": {
     "callback-return":              ["error", ["done", "proceed", "next", "onwards", "callback", "cb"]],
-    "camelcase":                    ["warn", {"properties":"always"}],
     "comma-style":                  ["warn", "last"],
     "curly":                        ["error"],
-    "eqeqeq":                       ["error", "always"],
+    "eqeqeq":                       ["error", "always", {"null": "ignore"}],
     "eol-last":                     ["warn"],
     "handle-callback-err":          ["error"],
     "indent":                       ["warn", 2, {
@@ -58,7 +57,6 @@
       "ObjectExpression": 1,
       "ignoredNodes": ["ConditionalExpression"]
     }],
-    "linebreak-style":              ["error", "unix"],
     "no-dupe-keys":                 ["error"],
     "no-duplicate-case":            ["error"],
     "no-extra-semi":                ["warn"],
